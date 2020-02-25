@@ -1,4 +1,5 @@
 ![](https://github.com/TTitcombe/PrivacyPanda/workflows/Python%20application/badge.svg)
+![PrivacyPanda](./images/logo.png)
 # PrivacyPanda
 **PrivacyPanda** is a package for detecting and removing personal, private data (such as names and addresses) from [**pandas**][pandas] dataframes.
 
