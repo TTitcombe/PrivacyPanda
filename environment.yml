@@ -15,6 +15,7 @@ dependencies:
 # code quality
   - black  # for automatic code formatting
   - isort  # for import standardization
+  - flake8  # for linting
 # utilities
   - pip >=19  # for native python installer
   - pip:
