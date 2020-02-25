@@ -51,3 +51,18 @@ def test_address_check_returns_empty_list_if_no_addresses_found():
     expected_private_columns = []
 
     assert actual_private_columns == expected_private_columns
+
+
+def test_check_addresses_can_handle_mixed_dtype_columns():
+    df = pd.DataFrame(
+        {
+            "privateColumn": [True, "AB1 1AB", "c"],
+            "privateColumn2": [1, "b", "10 Downing Street"],
+            "nonPrivateColumn": [0, True, "test"],
+        }
+    )
+
+    actual_private_columns = pp.check_addresses(df)
+    expected_private_columns = ["privateColumn", "privateColumn2"]
+
+    assert actual_private_columns == expected_private_columns

@@ -4,12 +4,12 @@ Code for identifying addresses
 import re
 from typing import List
 
-import numpy as np
 import pandas as pd
+from numpy import dtype as np_dtype
 
 __all__ = ["check_addresses"]
 
-OBJECT_DTYPE = np.dtype("O")
+OBJECT_DTYPE = np_dtype("O")
 
 # ----- Regex constants ----- #
 LETTER = "[a-zA-Z]"
@@ -55,6 +55,7 @@ def check_addresses(df: pd.DataFrame) -> List:
         # Only check column if it may contain strings
         if row.dtype == OBJECT_DTYPE:
             for item in row:
+                item = str(item)  # convert incase column has mixed data types
 
                 if UK_POSTCODE_PATTERN.match(item) or SIMPLE_ADDRESS_PATTERN.match(
                     item
