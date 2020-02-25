@@ -13,6 +13,7 @@ dependencies:
 # unit testing
   - pytest >=4.4  # for unit testing
 # code quality
+  - pre-commit  # for automatic code quality checking
   - black  # for automatic code formatting
   - isort  # for import standardization
   - flake8  # for linting
