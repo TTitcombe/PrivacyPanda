@@ -9,10 +9,21 @@ import pandas as pd
 
 OBJECT_DTYPE = np.dtype("O")
 
-# Regex constants
+# ----- Regex constants ----- #
 LETTER = "[a-zA-Z]"
+
+# UK Postcode
 UK_POSTCODE_PATTERN = re.compile(
     LETTER + LETTER + "\\d{1,2}" + "\\s+" + "\\d" + LETTER + LETTER
+)
+
+# Street names
+STREET_ENDINGS = "[street|road|way|avenue]"
+
+# Simple address is up to a four digit number + street name with 1-10 characters
+# + one of "road", "street", "way", "avenue"
+SIMPLE_ADDRESS_PATTERN = re.compile(
+    "[0-9]{1,4}\\s[a-z]{1,10}\\s" + STREET_ENDINGS, re.I
 )
 
 
@@ -21,15 +32,7 @@ def check_addresses(df: pd.DataFrame) -> List:
     Check a dataframe for columns containing addresses. Returns a list of column
     names which contain at least one address
 
-    "Addresses" currently only concerns UK postcodes, which are of the form:
-    * Two letters
-    * One or two digits
-    * Whitespace
-    * One digit
-    * Two letters
-    E.g.:
-    * AB1 1AB
-    * AB12 1AB
+    "Addresses" currently only concerns UK postcodes and simple street names.
     This implementation does not consider whether the addresses are real.
 
     Parameters
@@ -41,7 +44,6 @@ def check_addresses(df: pd.DataFrame) -> List:
     -------
     List
         The names of columns which contain at least one address
-
     """
     private_cols = []
 
@@ -52,7 +54,9 @@ def check_addresses(df: pd.DataFrame) -> List:
         if row.dtype == OBJECT_DTYPE:
             for item in row:
 
-                if UK_POSTCODE_PATTERN.match(item):
+                if UK_POSTCODE_PATTERN.match(item) or SIMPLE_ADDRESS_PATTERN.match(
+                    item
+                ):
                     private_cols.append(col)
                     break  # 1 failure is enough
 
