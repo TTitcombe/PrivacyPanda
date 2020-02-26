@@ -39,6 +39,33 @@ def test_removes_columns_containing_addresses(address):
     pd.testing.assert_frame_equal(actual_df, expected_df)
 
 
+@pytest.mark.parametrize(
+    "email",
+    [
+        "a.test.email@email.com",
+        "a.n.other@testing.co.uk",
+        "a.person@blah.org",
+        "foo@bar.edu",
+    ],
+)
+def test_removes_columns_containing_emails(email):
+    df = pd.DataFrame(
+        {
+            "privateData": ["a", "b", "c", email],
+            "nonPrivateData": ["a", "b", "c", "d"],
+            "nonPrivataData2": [1, 2, 3, 4],
+        }
+    )
+
+    expected_df = pd.DataFrame(
+        {"nonPrivateData": ["a", "b", "c", "d"], "nonPrivataData2": [1, 2, 3, 4]}
+    )
+
+    actual_df = pp.anonymize(df)
+
+    pd.testing.assert_frame_equal(actual_df, expected_df)
+
+
 def test_returns_empty_dataframe_if_all_columns_contain_private_information():
     df = pd.DataFrame(
         {
