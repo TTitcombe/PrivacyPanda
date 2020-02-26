@@ -2,9 +2,13 @@
 Code for reporting the privacy of a dataframe
 """
 from collections import defaultdict
-from typing import List, Union
+from typing import TYPE_CHECKING, List, Union
 
 from .addresses import check_addresses
+
+if TYPE_CHECKING:
+    import pandas
+
 
 __all__ = ["report_privacy"]
 
