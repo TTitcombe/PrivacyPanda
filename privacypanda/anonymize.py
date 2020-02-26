@@ -5,6 +5,7 @@ import pandas as pd
 from numpy import unique as np_unique
 
 from .addresses import check_addresses
+from .email import check_emails
 
 
 def anonymize(df: pd.DataFrame) -> pd.DataFrame:
@@ -27,7 +28,7 @@ def anonymize(df: pd.DataFrame) -> pd.DataFrame:
     """
     private_cols = []
 
-    checks = [check_addresses]
+    checks = [check_addresses, check_emails]
     for check in checks:
         new_private_cols = check(df)
         private_cols += new_private_cols
