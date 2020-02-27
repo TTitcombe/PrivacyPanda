@@ -39,6 +39,25 @@ def test_removes_columns_containing_addresses(address):
     pd.testing.assert_frame_equal(actual_df, expected_df)
 
 
+@pytest.mark.parametrize("number", ["07123456789", "+447345345345"])
+def test_removes_columns_containing_phonenumbers(number):
+    df = pd.DataFrame(
+        {
+            "privateData": ["a", "b", "c", number],
+            "nonPrivateData": ["a", "b", "c", "d"],
+            "nonPrivataData2": [1, 2, 3, 4],
+        }
+    )
+
+    expected_df = pd.DataFrame(
+        {"nonPrivateData": ["a", "b", "c", "d"], "nonPrivataData2": [1, 2, 3, 4]}
+    )
+
+    actual_df = pp.anonymize(df)
+
+    pd.testing.assert_frame_equal(actual_df, expected_df)
+
+
 @pytest.mark.parametrize(
     "email",
     [
@@ -69,8 +88,8 @@ def test_removes_columns_containing_emails(email):
 def test_returns_empty_dataframe_if_all_columns_contain_private_information():
     df = pd.DataFrame(
         {
-            "nonPrivateData": ["a", "AB1 1AB", "c", "d"],
-            "PrivataData2": [1, 2, 3, "AB1 1AB"],
+            "PrivateData": ["a", "AB1 1AB", "c", "d"],
+            "PrivataData2": [1, 2, 3, "07123456789"],
         }
     )
 
