@@ -20,7 +20,7 @@ UK_POSTCODE_PATTERN = re.compile(
 )
 
 # Street names
-STREET_ENDINGS = "[street|road|way|avenue]"
+STREET_ENDINGS = r"(street|road|way|avenue)"
 
 # Simple address is up to a four digit number + street name with 1-10 characters
 # + one of "road", "street", "way", "avenue"

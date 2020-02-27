@@ -33,6 +33,20 @@ def test_address_check_returns_empty_list_if_no_emails_found():
     assert actual_private_columns == expected_private_columns
 
 
+@pytest.mark.parametrize(
+    "email", ["some@thing.net", "a@test.test", "new.zealand@place.nz"]
+)
+def test_does_not_identify_non_whitelisted_suffixes_as_emails(email):
+    df = pd.DataFrame(
+        {"privateColumn": ["a", email, "c"], "nonPrivateColumn": ["a", "b", "c"]}
+    )
+
+    actual_private_columns = pp.check_addresses(df)
+    expected_private_columns = []
+
+    assert actual_private_columns == expected_private_columns
+
+
 def test_check_emails_can_handle_mixed_dtype_columns():
     df = pd.DataFrame(
         {

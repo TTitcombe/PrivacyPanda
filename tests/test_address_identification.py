@@ -42,6 +42,28 @@ def test_can_identify_column_containing_simple_street_names(address):
     assert actual_private_columns == expected_private_columns
 
 
+@pytest.mark.parametrize(
+    "address",
+    [
+        "10 Downing St",
+        "10 downing st",
+        "1 the rd",
+        "01 The Place",
+        "55 Maple Ave",
+        "4 Python Wy",
+    ],
+)
+def test_does_not_identify_non_whitelisted_street_types_as_addresses(address):
+    df = pd.DataFrame(
+        {"privateColumn": ["a", address, "c"], "nonPrivateColumn": ["a", "b", "c"]}
+    )
+
+    actual_private_columns = pp.check_addresses(df)
+    expected_private_columns = []
+
+    assert actual_private_columns == expected_private_columns
+
+
 def test_address_check_returns_empty_list_if_no_addresses_found():
     df = pd.DataFrame(
         {"nonPrivateColumn1": ["a", "b", "c"], "nonPrivateColumn2": ["a", "b", "c"]}
