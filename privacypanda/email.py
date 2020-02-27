@@ -14,7 +14,7 @@ OBJECT_DTYPE = np_dtype("O")
 # Whitelisted email suffix.
 # TODO extend this
 WHITELIST_EMAIL_SUFFIXES = [".co.uk", ".com", ".org", ".edu"]
-EMAIL_SUFFIX_REGEX = "[" + r"|".join(WHITELIST_EMAIL_SUFFIXES) + "]"
+EMAIL_SUFFIX_REGEX = "(" + r"|".join(WHITELIST_EMAIL_SUFFIXES) + ")"
 
 # Simple email pattern
 SIMPLE_EMAIL_PATTERN = re.compile(".*@.*" + EMAIL_SUFFIX_REGEX, re.I)
