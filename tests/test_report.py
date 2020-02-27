@@ -29,6 +29,28 @@ def test_can_report_addresses():
     assert actual_string == expected_string
 
 
+def test_can_report_phonenumbers():
+    df = pd.DataFrame(
+        {
+            "col1": ["a", "b", "07987654321"],
+            "col2": [1, 2, 3],
+            "col3": ["+447123123123", "b", "c"],
+        }
+    )
+
+    # Check correct breaches have been logged
+    report = pp.report_privacy(df)
+    expected_breaches = {"col1": ["phone number"], "col3": ["phone number"]}
+
+    assert report._breaches == expected_breaches
+
+    # Check string report
+    actual_string = str(report)
+    expected_string = "col1: ['phone number']\ncol3: ['phone number']\n"
+
+    assert actual_string == expected_string
+
+
 def test_can_report_emails():
     df = pd.DataFrame(
         {

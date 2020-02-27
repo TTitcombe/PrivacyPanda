@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, List, Union
 
 from .addresses import check_addresses
 from .email import check_emails
+from .phonenumbers import check_phonenumbers
 
 if TYPE_CHECKING:
     import pandas
@@ -58,7 +59,11 @@ class Report:
 def report_privacy(df: "pandas.DataFrame") -> Report:
     report = Report()
 
-    checks = {"address": check_addresses, "email": check_emails}
+    checks = {
+        "address": check_addresses,
+        "email": check_emails,
+        "phone number": check_phonenumbers,
+    }
 
     for breach, check in checks.items():
         columns = check(df)
