@@ -1,5 +1,6 @@
 ![](https://github.com/TTitcombe/PrivacyPanda/workflows/Test%20build/badge.svg)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
+![](https://img.shields.io/badge/privacy-protecting-black)
 
 
 <p align="center">
