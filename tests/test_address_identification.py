@@ -24,11 +24,17 @@ def test_can_identify_column_containing_UK_postcode(postcode):
     [
         "10 Downing Street",
         "10 downing street",
+        "11 Downing St.",
+        "9 downing St",
         "1 the Road",
+        "2 A Rd.",
+        "2 A Rd",
         "01 The Road",
         "1234 The Road",
         "55 Maple Avenue",
+        "55 Maple Ave",
         "4 Python Way",
+        "4 Python wy",
     ],
 )
 def test_can_identify_column_containing_simple_street_names(address):
@@ -42,17 +48,7 @@ def test_can_identify_column_containing_simple_street_names(address):
     assert actual_private_columns == expected_private_columns
 
 
-@pytest.mark.parametrize(
-    "address",
-    [
-        "10 Downing St",
-        "10 downing st",
-        "1 the rd",
-        "01 The Place",
-        "55 Maple Ave",
-        "4 Python Wy",
-    ],
-)
+@pytest.mark.parametrize("address", ["01 The Place"])
 def test_does_not_identify_non_whitelisted_street_types_as_addresses(address):
     df = pd.DataFrame(
         {"privateColumn": ["a", address, "c"], "nonPrivateColumn": ["a", "b", "c"]}
