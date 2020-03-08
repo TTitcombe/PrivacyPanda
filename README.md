@@ -1,4 +1,5 @@
 ![](https://github.com/TTitcombe/PrivacyPanda/workflows/Test%20build/badge.svg)
+[![Binder](https://mybinder.org/badge_logo.svg)][binder]]
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
 ![](https://img.shields.io/badge/privacy-protecting-black)
 
@@ -25,13 +26,49 @@ To install `privacypanda`: clone the repository, navigate to the project folder 
 This local installation is currently the only way to install `privacypanda` for use in other projects. A pypi installation is coming soon.
 
 ## How to use
-_Coming soon_
+See the [example notebooks](./examples/) for more extensive usage.
+[Click this link][binder] to run the example notebooks online.
+
+With `privacypanda` you can audit the privacy of your dataframe:
+```python
+import pandas as pd
+import privacypanda as pp
+
+data = pd.DataFrame(
+    {
+        "privateData":
+            [
+                "an@email.com",
+                "AB1 1AB",
+                "Some other data",
+            ],
+        "nonPrivateData":
+            [
+                1,
+                2,
+                3,
+            ],
+    }
+)
+
+print(pp.report_privacy(data))
+```
+
+This prints the names of any colums in the data which break privacy,
+and the ways in which privacy is broken.
+
+```python
+>>> "privateData": ["address", "email"]
+```
 
 ## Contributing
-All contributions are important and welcomed. Please see the [contributing guide](./CONTRIBUTING.md) for more information.
+All contributions are important and welcomed.
+Please see the [contributing guide](./CONTRIBUTING.md) for more information.
 
 ## License
-The **PrivacyPanda** project is licensed with Apache 2.0. Please refer to the [license](./LICENSE) for more information.
+The **PrivacyPanda** project is licensed with Apache 2.0.
+Please refer to the [license](./LICENSE) for more information.
 
 
+[binder]: https://mybinder.org/v2/gh/TTitcombe/PrivacyPanda/master
 [pandas]: https://pandas.pydata.org/
