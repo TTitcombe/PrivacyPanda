@@ -1,5 +1,5 @@
 ![](https://github.com/TTitcombe/PrivacyPanda/workflows/Test%20build/badge.svg)
-[![Binder](https://mybinder.org/badge_logo.svg)][binder]]
+[![Binder](https://mybinder.org/badge_logo.svg)][binder]
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
 ![](https://img.shields.io/badge/privacy-protecting-black)
 
