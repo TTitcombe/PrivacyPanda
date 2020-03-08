@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 * Identify simple addresses
     - Up to a four digit building number + street name + street suffix
-    - "street", "road", "avenue", "way" are accepted suffixes
+    - "street", "road", "avenue", "way", "st", "rd", "ave", "wy" are accepted suffixes
 * Identify UK postcodes
     - Two characters, 1 or 2 digits, space, 1 digit, 2 characters
     - No validation of postcodes is carried out
