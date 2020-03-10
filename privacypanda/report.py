@@ -2,17 +2,16 @@
 Code for reporting the privacy of a dataframe
 """
 from collections import defaultdict
-from typing import TYPE_CHECKING, List, Union
+from typing import TYPE_CHECKING, Callable, List, Union
+
+import pandas as pd
 
 from .addresses import check_addresses
 from .email import check_emails
+from .errors import PrivacyError
 from .phonenumbers import check_phonenumbers
 
-if TYPE_CHECKING:
-    import pandas
-
-
-__all__ = ["report_privacy"]
+__all__ = ["report_privacy", "check_privacy"]
 
 
 class Report:
@@ -56,7 +55,20 @@ class Report:
         return report
 
 
-def report_privacy(df: "pandas.DataFrame") -> Report:
+def report_privacy(df: pd.DataFrame) -> Report:
+    """
+    Create a Report on the privacy of a dataframe
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        The data on which to create a report
+
+    Returns
+    -------
+    privacypanda.report.Report
+        The report object on the provided dataframe
+    """
     report = Report()
 
     checks = {
@@ -70,3 +82,44 @@ def report_privacy(df: "pandas.DataFrame") -> Report:
         report.add_breach(columns, breach)
 
     return report
+
+
+# Privacy decorator
+def check_privacy(func: Callable) -> Callable:
+    """
+    A decorator which checks if the output of a function
+    breaches privacy
+
+    Parameters
+    ----------
+    func : function
+        The function to wrap
+
+    Returns
+    -------
+    The function, wrapped so function output
+    is checked for privacy breaches
+
+    Raises
+    ------
+    PrivacyError
+        If the output of the wrapped function breaches privacy
+    """
+
+    def inner_func(*args, **kwargs):
+        data = func(*args, **kwargs)
+
+        if isinstance(data, pd.DataFrame):
+            privacy_report = report_privacy(data)
+
+            if privacy_report._breaches.keys():
+                # Output list of breaches
+                breaches = f""
+                for breach_col, breach_type in privacy_report._breaches.items():
+                    breaches += f"\t{breach_col}: {breach_type}\n"
+
+                raise PrivacyError("Privacy breach in data:\n" + breaches)
+
+        return data
+
+    return inner_func

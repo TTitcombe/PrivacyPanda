@@ -1,10 +1,10 @@
 """
 Test reporting functionality
 """
+import numpy as np
 import pandas as pd
-import pytest
-
 import privacypanda as pp
+import pytest
 
 
 def test_can_report_addresses():
@@ -90,3 +90,56 @@ def test_report_can_accept_multiple_breaches_per_column():
     }
 
     assert report._breaches == expected_breaches
+
+
+def test_check_privacy_wrapper_returns_data_if_no_privacy_breaches():
+    df = pd.DataFrame({"col1": ["a", "b", "c", "d", "e"], "col2": [1, 2, 5, 10, 20]})
+
+    @pp.check_privacy
+    def return_data():
+        return df
+
+    data = return_data()
+
+    pd.testing.assert_frame_equal(data, df)
+
+
+@pytest.mark.parametrize(
+    "breach_type,breach",
+    [
+        ("email", "a.n.email@gmail.com"),
+        ("address", "10 Downing St"),
+        ("phone number", "07123456789"),
+    ],
+)
+def test_check_privacy_wrapper_raises_if_data_contains_privacy_breaches(
+    breach_type, breach
+):
+    df = pd.DataFrame({"col1": ["a", breach, "c", "d", "e"], "col2": [1, 2, 5, 10, 20]})
+
+    @pp.check_privacy
+    def return_data():
+        return df
+
+    with pytest.raises(pp.errors.PrivacyError):
+        data = return_data()
+
+
+@pytest.mark.parametrize(
+    "output",
+    [
+        5,
+        [1, 2, 3],
+        ("a", "b"),
+        "output",
+        pd.Series([1, 2, 3, 10, 15]),
+        np.random.random((10, 3)),
+    ],
+)
+def test_check_privacy_wrapper_returns_output_if_output_not_pandas_dataframe(output):
+    @pp.check_privacy
+    def return_data():
+        return output
+
+    data = return_data()
+    assert isinstance(data, type(output))
