@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.0] - 2020-03-10
 ### Added
 * Identify simple addresses
     - Up to a four digit building number + street name + street suffix
@@ -22,4 +22,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Function to remove columns containing at least one privacy breach from the dataframe
 
 
-[Unreleased]: https://github.com/TTitcombe/PrivacyPanda/tree/master
+[0.1.0]: https://github.com/TTitcombe/PrivacyPanda/releases/tag/0.1.0
