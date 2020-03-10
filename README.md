@@ -21,9 +21,13 @@ A necessary step to protect ourselves is to anonymize data - to strip it of any 
 ## How to install
 `privacypanda` requires python of `3.7` or above and `pandas >= 1.0.0`.
 
-To install `privacypanda`: clone the repository, navigate to the project folder and run `pip install -e .`
+`privacypanda` can be installed via [pypi](https://pypi.org/) via 
+```pip install privacypanda```
 
-This local installation is currently the only way to install `privacypanda` for use in other projects. A pypi installation is coming soon.
+Alternatively, to install from source:
+1. clone the repository
+2. navigate to the project folder
+3. run `pip install -e .`
 
 ## How to use
 See the [example notebooks](./examples/) for more extensive usage.
